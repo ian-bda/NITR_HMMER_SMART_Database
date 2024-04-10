@@ -34,6 +34,8 @@ perl six_frame_univeral.pl JANRMT010062854.1.fa >> all_six_frames.fa
 perl six_frame_univeral.pl JANRMT010062807.1.fa >> all_six_frames.fa 
 ```
 
+you want just one file containing all of the six frame transaltions for all of your scaffolds
+
 ## Step 4: Process HMMER Results
 
 smart_hmmer_parser.pl searches the all_six_frames.out file for any ORFs that were significant for containing any variant of a SMART Immunoglobulin domain
@@ -43,4 +45,6 @@ perl smart_hmmer_parser.pl > smart_parsed_hmmer_out.tsv
 ```
 
 # Find NITR domains 
+
+Convert tsv file to fa file that can be blasted using Parse_HMMER_out_universal.ipynb
 
