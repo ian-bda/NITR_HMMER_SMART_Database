@@ -46,5 +46,5 @@ perl smart_hmmer_parser.pl > smart_parsed_hmmer_out.tsv
 
 # Find NITR domains 
 
-Convert tsv file to fa file that can be blasted using Parse_HMMER_out_universal.ipynb
+Convert tsv file to fa file that can be blasted using Parse_HMMER_out_universal.py
 
