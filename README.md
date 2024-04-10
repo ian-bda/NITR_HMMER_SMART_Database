@@ -42,7 +42,7 @@ perl six_frame_univeral.pl JANRMT010062854.1.fa >> all_six_frames.fa
 perl six_frame_univeral.pl JANRMT010062807.1.fa >> all_six_frames.fa 
 ```
 
-# Step 5: 
+## Step 5: Process HMMER Results
 
 smart_hmmer_parser.pl searches the all_six_frames.out file for any ORFs that were significant for containing any variant of a SMART Immunoglobulin domain
 
