@@ -2,7 +2,7 @@
 
 This is a universal version of Dustin Wcisel's perl scripts which can be found here: https://github.com/djwcisel/nilts, adapted to be able to handle any scaffold for the six frame translation and be able to search for NITR (Novel Immune Type Receptor) IG domains in Bichir.
 
-## Step 1: Download SMART Database and update HMMER to be compatible
+## Step 1: Download SMART Database and HMMER update hmm files to be compatible
 The SMART database was downloaded from [https://software.embl-em.de/](https://software.embl-em.de/software/18)
 
 HMMER can be download from http://hmmer.org/
