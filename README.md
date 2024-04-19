@@ -7,12 +7,11 @@ The SMART database was downloaded from [https://software.embl-em.de/](https://so
 
 HMMER can be download from http://hmmer.org/
 
-Use custom perl script to update hmm files from SMART database to be compatible with HMMER by generating new .hmm profiles and merging into one file:
+SMART.hmm file was made using hmmbuild.pl to update hmm files from SMART database to be compatible with HMMER by generating new .hmm profiles and merging into one file:
 
 ```
 perl hmmbuild.pl
 cat *.hmm > SMART.hmm
-hmmscan --cpu 12 SMART.hmm all_six_frames.fa > all_six_frames_smart.out
 ```
 
 ## Step 2: Grab Scaffolds:
@@ -36,7 +35,13 @@ perl six_frame_univeral.pl JANRMT010062807.1.fa >> all_six_frames.fa
 
 you want just one file containing all of the six frame transaltions for all of your scaffolds
 
-## Step 4: Process HMMER Results
+## Step 6: Run hmmerscan on all_six_frames.fa file
+
+```
+hmmscan SMART.hmm all_six_frames.fa > all_six_frames_smart.out
+```
+
+## Step 5: Process HMMER Results for IG Domains
 
 smart_hmmer_parser.pl searches the all_six_frames.out file for any ORFs that were significant for containing any variant of a SMART Immunoglobulin domain
 
