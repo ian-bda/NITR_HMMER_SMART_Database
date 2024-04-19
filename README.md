@@ -35,13 +35,13 @@ perl six_frame_univeral.pl JANRMT010062807.1.fa >> all_six_frames.fa
 
 you want just one file containing all of the six frame transaltions for all of your scaffolds
 
-## Step 6: Run hmmerscan on all_six_frames.fa file
+## Step 5: Run hmmerscan on all_six_frames.fa file
 
 ```
 hmmscan SMART.hmm all_six_frames.fa > all_six_frames_smart.out
 ```
 
-## Step 5: Process HMMER Results for IG Domains
+## Step 6: Process HMMER Results for IG Domains
 
 smart_hmmer_parser.pl searches the all_six_frames.out file for any ORFs that were significant for containing any variant of a SMART Immunoglobulin domain
 
