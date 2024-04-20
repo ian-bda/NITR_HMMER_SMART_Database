@@ -17,7 +17,7 @@ cat *.hmm > SMART.hmm
 ## Step 2: Grab Scaffolds:
 Polypyerus bichir lapradei scaffolds were downloaded from: 
 
-https://www.google.com/url?q=https://www.ncbi.nlm.nih.gov/nucleotide/JANRMT010028174.1?report%3Dgenbank%26log$%3Dnuclalign%26blast_rank%3D1%26RID%3D05P74N1E013&sa=D&source=docs&ust=1712765973402913&usg=AOvVaw301s9bpxW-7heRysVHYRGh
+https://www.ncbi.nlm.nih.gov/nucleotide/JANRMT010028174.1?report%3Dgenbank%26log$%3Dnuclalign%26blast_rank%3D1%26RID%3D05P74N1E013&sa=D&source=docs&ust=1712765973402913&usg=AOvVaw301s9bpxW-7heRysVHYRGh
 
 https://www.ncbi.nlm.nih.gov/nucleotide/JANRMT010062854.1?report=genbank&log$=nuclalign&blast_rank=1&RID=05P3DEH5013
 
