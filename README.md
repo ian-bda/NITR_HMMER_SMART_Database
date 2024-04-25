@@ -46,7 +46,7 @@ hmmscan SMART.hmm all_six_frames.fa > all_six_frames_smart.out
 smart_hmmer_parser.pl searches the all_six_frames.out file for any ORFs that were significant for containing any variant of a SMART Immunoglobulin domain
 
 ```
-perl smart_hmmer_parser.pl > smart_parsed_hmmer_out.tsv
+perl smart_hmmer_parser.pl > smart_parsed_hmmer_out.csv
 ```
 
 # Find NITR domains (optional)
