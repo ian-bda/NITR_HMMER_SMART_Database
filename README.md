@@ -51,7 +51,7 @@ perl smart_hmmer_parser.pl > smart_parsed_hmmer_out.csv
 
 # Find NITR domains (optional)
 
-Now that I had a tsv file of all the IG domains found in my scaffolds, I wanted to know which ones were NITRs. To do this I:
+Now that I had a csv file of all the IG domains found in my scaffolds, I wanted to know which ones were NITRs. To do this I:
 
 1. Grabbed protein sequences using Parse_HMMER_out.py --> ig_to_blast.fa
 2. Created blast database from zebrafish protein assembly fasta file found here: https://www.ncbi.nlm.nih.gov/datasets/taxonomy/7955/ and blastp against ig_to_blast.fa
@@ -60,5 +60,5 @@ Now that I had a tsv file of all the IG domains found in my scaffolds, I wanted 
    makeblastdb -in zebrafish_protein.faa -dbtype prot -out zebrafish_protein_blast_db
    blastp -query ig_to_blast.fa -db zebrafish_protein_blast_db -out zebrafish_protein_blastp_out.txt -max_target_seqs 5
    ```
-3. Merge zebrafish_protein_blastp_out and smart_parsed_hmmer_out.tsv using nitr_blastp_parser.py
+3. Merge zebrafish_protein_blastp_out and smart_parsed_hmmer_out.csv using nitr_blastp_parser.py
 
