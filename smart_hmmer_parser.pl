@@ -7,24 +7,6 @@ use Bio::SearchIO;
 use List::MoreUtils qw(uniq);
 use List::Util qw(min max);
 
-# Configuration file containing scaffold identifiers and their corresponding DNA sequence files
-my $config_file = "config.txt";
-
-# Hash to store scaffold identifiers and their corresponding DNA sequence
-my %scaffold_sequences;
-
-# Read configuration file
-open(CONFIG, $config_file) or die "Could not open $config_file: $!";
-while (<CONFIG>) {
-    chomp;
-    my ($scaffold, $file) = split(/\s+/, $_, 2);
-    open(my $fh, $file) or die "Could not open $file: $!";
-    my $sequence = join('', <$fh>);
-    close($fh);
-    $scaffold_sequences{$scaffold} = $sequence;
-}
-close(CONFIG);
-
 # Parse HMMER output file
 my $hmmer_file = "all_six_frames_smart.out";
 my $in = Bio::SearchIO->new( -file => $hmmer_file, -format => 'hmmer' );
@@ -32,6 +14,9 @@ my $in = Bio::SearchIO->new( -file => $hmmer_file, -format => 'hmmer' );
 # Hashes to store start and end positions of hits
 my %start_pos;
 my %end_pos;
+
+# Hash to store scaffold identifiers and their corresponding DNA sequence files
+my %scaffold_files;
 
 while (my $result = $in->next_result) {
     while (my $hit = $result->next_hit) {
@@ -57,11 +42,22 @@ foreach my $key (sort keys %start_pos) {
     my $adj_orf_start = $orf_start + $offset;
     my $adj_orf_end = $adj_orf_start + $length;
 
-    if (exists $scaffold_sequences{$scaf}) {
-        my $scaffold_seq = $scaffold_sequences{$scaf};
+    # Infer scaffold file based on scaffold name
+    my $scaffold_file = "$scaf.fasta";
+
+    if (-e $scaffold_file) {
+        open(my $fh, $scaffold_file) or die "Could not open $scaffold_file: $!";
+        my $scaffold_seq = join('', <$fh>);
+        close($fh);
+
         # Rest of your processing logic goes here...
         # Modify according to your specific requirements
+        
+        # Example: Print scaffold information
+        print "Scaffold: $scaf\n";
+        print "Scaffold Sequence: $scaffold_seq\n";
     } else {
-        warn "Scaffold $scaf not found in configuration file.";
+        warn "Scaffold file $scaffold_file not found.";
     }
 }
+
