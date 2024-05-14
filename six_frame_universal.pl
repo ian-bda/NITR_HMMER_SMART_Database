@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-### written by Ian Birchler de Allende on 03/29/23
+### written by Ian Birchler de Allende on 03/29/23 based on code from Dustin Wcisel
 ### takes a scaffold fasta input and outputs all six frame translations with genomic coordinates embedded in the header
 ### subroutines from Beginning Perl for Bioinformatics, O'Reilly 2001
 
