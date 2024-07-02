@@ -55,12 +55,15 @@ replace "scaffold.fasta" with actual file. In this case: --scaffold JANRMT010028
 
 Now that I had a csv file of all the IG domains found in my scaffolds, I wanted to know which ones were NITRs. To do this I:
 
-1. Grab protein sequences using Parse_HMMER_out.py --> ig_to_blast.fa
-2. Create blast database from zebrafish protein assembly fasta file found here: https://www.ncbi.nlm.nih.gov/datasets/taxonomy/7955/ and blastp against ig_to_blast.fa
+1. Grab protein sequences using:
+   ```
+   python Parse_HMMER_out.py smart_parsed_hmmer_out.csv
+   ```
+3. Create blast database from zebrafish protein assembly fasta file found here: https://www.ncbi.nlm.nih.gov/datasets/taxonomy/7955/ and blastp against ig_to_blast.fa
    
    ```
    makeblastdb -in zebrafish_protein.faa -dbtype prot -out zebrafish_protein_blast_db
    blastp -query ig_to_blast.fa -db zebrafish_protein_blast_db -out zebrafish_protein_blastp_out.txt -max_target_seqs 5
    ```
-3. Turn zebrafish_protein_blastp_out.txt into csv file and merge with smart_parsed_hmmer_out.csv using nitr_blastp_parser.py 
+6. Turn zebrafish_protein_blastp_out.txt into csv file and merge with smart_parsed_hmmer_out.csv using nitr_blastp_parser.py 
 
