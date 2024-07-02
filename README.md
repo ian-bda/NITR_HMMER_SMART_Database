@@ -63,7 +63,7 @@ Now that I had a csv file of all the IG domains found in my scaffolds, I wanted 
    
    ```
    makeblastdb -in zebrafish_protein.faa -dbtype prot -out zebrafish_protein_blast_db
-   blastp -query ig_to_blast.fa -db zebrafish_protein_blast_db -out zebrafish_protein_blastp_out.txt -max_target_seqs 5
+   blastp -query ig_to_blast.fa -db zebrafish_protein_blast_db -out blastp_out.txt -max_target_seqs 5
    ```
-6. Turn zebrafish_protein_blastp_out.txt into csv file and merge with smart_parsed_hmmer_out.csv using nitr_blastp_parser.py 
+6. Turn blastp_out.txt into csv file and merge with smart_parsed_hmmer_out.csv using nitr_blastp_parser.py 
 
