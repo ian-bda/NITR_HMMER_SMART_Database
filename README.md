@@ -51,7 +51,7 @@ perl smart_hmmer_parser.pl --scaffold scaffold.fasta > smart_parsed_hmmer_out.cs
 
 replace "scaffold.fasta" with actual file. In this case: --scaffold JANRMT010028174.fasta, JANRMT010062854.fasta, and JANRMT010062807.fasta
 
-# Find NITR domains (optional)
+# Find NITR domains
 
 Now that I had a csv file of all the IG domains found in my scaffolds, I wanted to know which ones were NITRs. To do this I:
 
