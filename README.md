@@ -49,7 +49,7 @@ smart_hmmer_parser.pl searches the all_six_frames.out file for any ORFs that wer
 perl smart_hmmer_parser.pl --scaffold scaffold.fasta > smart_parsed_hmmer_out.csv
 ```
 
-replace "scaffold.fasta" with actual file. In this case: --scaffold JANRMT010028174.fasta
+replace "scaffold.fasta" with actual file. In this case: --scaffold JANRMT010028174.fasta, JANRMT010062854.fasta, and JANRMT010062807.fasta
 
 # Find NITR domains (optional)
 
