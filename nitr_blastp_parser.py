@@ -1,95 +1,90 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ### Parse blastp out file into pandas dataframe
-
-# In[42]:
-
-
+import sys
 import pandas as pd
 
-# Initialize lists to store data
-queries = []
-alignments = []
+def parse_blastp(blastp_file):
+    # Initialize lists to store data
+    queries = []
+    alignments = []
 
-# Read blastp output file
-blastp_file = "path/to/zebrafish_protein_blastp_out"
-with open(blastp_file) as f:
-    lines = f.readlines()
-    i = 0
-    while i < len(lines):
-        line = lines[i]
-        if line.startswith("Query="):
-            query = line.strip()
-            queries.append(query)
-            # Find the start index of the alignment section
-            alignment_start_index = i + 6  # Skip lines until the start of alignment section
-            # Find the end index of the alignment section
-            alignment_end_index = alignment_start_index
-            for j in range(alignment_start_index, len(lines)):
-                if lines[j].strip() == "":
-                    alignment_end_index = j
-                    break
-            # Extract alignment section
-            alignment = "".join(lines[alignment_start_index:alignment_end_index])
-            alignments.append(alignment)
-            # Move to the next query
-            i = alignment_end_index + 4
-        else:
-            i += 1
+    # Read the BLASTP output file
+    with open(blastp_file) as f:
+        lines = f.readlines()
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            if line.startswith("Query="):
+                query = line.strip()
+                queries.append(query)
+                # Find the start index of the alignment section
+                alignment_start_index = i + 6  # Skip lines until the start of the alignment section
+                # Find the end index of the alignment section
+                alignment_end_index = alignment_start_index
+                for j in range(alignment_start_index, len(lines)):
+                    if lines[j].strip() == "":
+                        alignment_end_index = j
+                        break
+                # Extract alignment section
+                alignment = "".join(lines[alignment_start_index:alignment_end_index])
+                alignments.append(alignment)
+                # Move to the next query
+                i = alignment_end_index + 4
+            else:
+                i += 1
 
-# Create DataFrame
-blastp_df = pd.DataFrame({
-    "Query": queries,
-    "Alignment": alignments
-})
+    # Create DataFrame
+    blastp_df = pd.DataFrame({
+        "Query": queries,
+        "Alignment": alignments
+    })
 
-print(blastp_df)
+    # Remove 'Query= ' from Query column
+    blastp_df['Query'] = blastp_df['Query'].str.replace('Query= ', '', regex=True)
 
+    # Split the Query column to extract scaffold information
+    blastp_df[['scaffold', 'scaf_start', 'scaf_end']] = blastp_df['Query'].str.extract(r'(.+?)_(\d+)-(\d+)')
+    
+    return blastp_df
 
-# In[43]:
+def main(blastp_file, hmmer_file):
+    blastp_df = parse_blastp(blastp_file)
+    
+    # Load the HMMER parsed output with tab delimiter
+    hmmer_df = pd.read_csv(hmmer_file, delimiter='\t')
 
+    # Print column names for debugging
+    print("HMMER DataFrame columns:", hmmer_df.columns)
+    
+    # Initialize a new column for BLASTP hits
+    hmmer_df['BLASTP_hits'] = ""
 
-# Remove 'Query= ' from Query column 
-blastp_df['Query'] = blastp_df['Query'].str.replace('Query= ', '', regex=True)
-blastp_df
+    # Iterate through HMMER DataFrame to match and update BLASTP results
+    for idx, row in hmmer_df.iterrows():
+        scaffold = row['scaffold']
+        scaf_start = str(row['scaf_start'])
+        scaf_end = str(row['scaf_end'])
+        
+        # Find matching BLASTP entries
+        matches = blastp_df[(blastp_df['scaffold'] == scaffold) & 
+                            (blastp_df['scaf_start'] == scaf_start) & 
+                            (blastp_df['scaf_end'] == scaf_end)]
+        
+        if not matches.empty:
+            # Combine the top 5 alignments
+            top_hits = matches['Alignment'].head(5).tolist()
+            hmmer_df.at[idx, 'BLASTP_hits'] = "\n".join(top_hits)
 
+    # Save the updated DataFrame back to CSV
+    hmmer_df.to_csv(hmmer_file, index=False, sep='\t')
 
-# In[44]:
+    print(f"CSV file '{hmmer_file}' has been updated successfully.")
 
-
-# Remove 'Query= ' from Query column 
-blastp_df['Query'] = blastp_df['Query'].str.replace('Query= ', '', regex=True)
-
-
-# In[45]:
-
-
-# Create scaf_start and scaf_end columns 
-# Splitting the Query column
-blastp_df[['Query', 'scaf_info']] = blastp_df['Query'].str.split('_', expand=True)
-blastp_df[['scaf_start', 'scaf_end']] = blastp_df['scaf_info'].str.split('-', expand=True)
-
-# Dropping not needed columns
-blastp_df.drop(columns=['scaf_info'], inplace=True)
-blastp_df = blastp_df.rename(columns={'Query': 'scaffold'})
-
-
-# In[47]:
-
-
-blastp_df
-
-
-# In[59]:
-
-
-# turn into csv file:
-blastp_df.to_csv('blastp_out.csv',index = False)
-
-
-# In[ ]:
-
-
-
-
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python parse_blastp.py <blastp_output_file> <hmmer_output_file>")
+    else:
+        blastp_file = sys.argv[1]
+        hmmer_file = sys.argv[2]
+        main(blastp_file, hmmer_file)
