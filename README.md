@@ -59,7 +59,7 @@ Now that I had a csv file of all the IG domains found in my scaffolds, I wanted 
    ```
    python Parse_HMMER_out.py smart_parsed_hmmer_out.csv
    ```
-3. Create blast database from zebrafish protein assembly fasta file found here: https://www.ncbi.nlm.nih.gov/datasets/taxonomy/7955/ and blastp against ig_to_blast.fa
+3. Create blast database from zebrafish protein assembly fasta file found here: https://www.ncbi.nlm.nih.gov/datasets/taxonomy/7955/ and blastp against ig_to_blast.fa --> blastp_out.txt
    
    ```
    makeblastdb -in zebrafish_protein.faa -dbtype prot -out zebrafish_protein_blast_db
@@ -67,3 +67,8 @@ Now that I had a csv file of all the IG domains found in my scaffolds, I wanted 
    ```
 6. Turn blastp_out.txt into csv file and merge with smart_parsed_hmmer_out.csv using nitr_blastp_parser.py 
 
+    ```
+   python nitr_blastp_parser.py blastp.txt smart_parsed_hmmer_out.csv
+   ```
+
+The final smart_parsed_hmmer_out.csv file should have the following columns: strand, scaffold, scaf_start, scaf_end, chr_start, chr_end, Ig-AA, Ig-nucl, BLASTP_hits which you can sort through and inspect manually for NITR domains.
