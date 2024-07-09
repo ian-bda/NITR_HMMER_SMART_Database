@@ -71,4 +71,8 @@ Now that I had a csv file of all the IG domains found in my scaffolds, I wanted 
    python nitr_blastp_parser.py blastp.txt smart_parsed_hmmer_out.csv
    ```
 
-The final smart_parsed_hmmer_out.csv file should have the following columns: strand, scaffold, scaf_start, scaf_end, chr_start, chr_end, Ig-AA, Ig-nucl, BLASTP_hits which you can sort through and inspect manually for NITR domains.
+The final smart_parsed_hmmer_out.csv file should have the following columns: 
+```
+strand scaffold scaf_start scaf_end chr_start chr_end Ig-AA Ig-nucl and BLASTP_hits 
+```
+You can sort through this file now and inspect manually for NITR domains.
